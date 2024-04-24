@@ -1,0 +1,92 @@
+package com.example;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+/**
+ * Unit test for simple App.
+ */
+public class AppTest {
+    // /**
+    // * Rigorous Test :-)
+    // *
+    // * @throws InterruptedException
+    // */
+    WebDriver driver;
+
+    @BeforeTest
+    public void setup() throws InterruptedException {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        Thread.sleep(3000);
+        System.out.println("Test start");
+    }
+
+    @BeforeMethod
+    public void test1() {
+        System.out.println("Individual test started");
+    }
+
+    @Test
+    public void shouldAnswerWithTrue() throws InterruptedException
+    {
+        WebDriverManager.edgedriver().setup();
+        driver = new EdgeDriver();
+        String path1 = "https://www.moneycontrol.com/";
+        driver.get(path1);
+        Thread.sleep(10000);
+    
+        driver.findElement(By.id("search_str")).sendKeys("Reliance Industries.",Keys.ENTER);
+            
+            
+        driver.findElement(By.xpath("//*[@id=\"mc_mainWrapper\"]/div[3]/div[2]/div/table/tbody/tr[4]/td[1]/p/a/strong")).click();
+        Thread.sleep(2000);
+        driver.navigate().to("https://www.moneycontrol.com/mf/sipcalculator.php");
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id=\"ff_id\"]/option[3]")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id=\"im_id\"]/option[2]")).click();
+        Thread.sleep(2000);
+    
+        driver.findElement(By.name("invamt")).sendKeys("100000");
+        Thread.sleep(2000);
+    
+        
+        driver.findElement(By.id("stdt")).sendKeys("2021-08-02");
+        Thread.sleep(1000);
+             
+             
+         driver.findElement(By.id("endt")).sendKeys("2023-08-17",Keys.ENTER);
+          Thread.sleep(1000);
+        String dt = driver.findElement(By.xpath("//table/tbody/tr[1]/td[2]")).getText();
+        String amt = driver.findElement(By.xpath("//table/tbody/tr[3]/td[2]")).getText();
+    
+    }
+    
+
+    @AfterMethod
+    public void test() {
+        System.out.println("Individual test ended");
+    }
+
+    @AfterTest
+    public void close() {
+        driver.quit();
+        System.out.println("Closed");
+    }
+}

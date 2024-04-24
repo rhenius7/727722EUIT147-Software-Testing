@@ -1,0 +1,83 @@
+package com.example;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+/**
+ * Unit test for simple App.
+ */
+public class AppTest {
+    // /**
+    // * Rigorous Test :-)
+    // *
+    // * @throws InterruptedException
+    // */
+    WebDriver driver;
+
+    @BeforeTest
+    public void setup() throws InterruptedException {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        Thread.sleep(3000);
+        System.out.println("Test start");
+    }
+
+    @BeforeMethod
+    public void test1() {
+        System.out.println("Individual test started");
+    }
+
+        @Test
+        public void shouldAnswerWithTrue() throws InterruptedException
+        {
+            WebDriverManager.chromedriver().setup();
+            WebDriver driver =new ChromeDriver();
+            driver.get("https://www.moneycontrol.com/");
+            Thread.sleep(20000);
+            WebElement element=driver.findElement(By.xpath("/html/body/div[3]/header/div[1]/div[1]/div/div/div[2]/div/div/form/input[5]"));
+            element.click();
+            element.sendKeys("Reliance Industries");
+            Thread.sleep(5000);
+            element.sendKeys(Keys.ENTER);
+            driver.findElement(By.xpath("/html/body/div[8]/div[3]/div[2]/div/table/tbody/tr[4]/td[1]/p/a/strong")).click();
+            JavascriptExecutor j=(JavascriptExecutor) driver;
+            j.executeScript("window.scrollBy(0,300)");
+           
+    
+            Thread.sleep(5000);
+            driver.findElement(By.linkText("Mutual Funds")).click();
+            Thread.sleep(5000);
+            JavascriptExecutor js=(JavascriptExecutor) driver;
+            js.executeScript("window.scrollBy(0,1200)");
+            Thread.sleep(5000);
+            driver.findElement(By.linkText("SIP")).click();
+            Thread.sleep(5000);
+            driver.quit();
+        }
+    
+
+    @AfterMethod
+    public void test() {
+        System.out.println("Individual test ended");
+    }
+
+    @AfterTest
+    public void close() {
+        driver.quit();
+        System.out.println("Closed");
+    }
+}

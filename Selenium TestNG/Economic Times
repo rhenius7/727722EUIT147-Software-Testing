@@ -46,7 +46,7 @@ public class AppTest {
         {
             WebDriverManager.chromedriver().setup();
             WebDriver driver =new ChromeDriver();
-            driver.get("https://www.moneycontrol.com/");
+            driver.get("https://economictimes.indiatimes.com/et-now/results");
             Thread.sleep(20000);
             WebElement element=driver.findElement(By.xpath("/html/body/div[3]/header/div[1]/div[1]/div/div/div[2]/div/div/form/input[5]"));
             element.click();

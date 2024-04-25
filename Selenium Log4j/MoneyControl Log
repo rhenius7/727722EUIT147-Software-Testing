@@ -1,0 +1,11 @@
+2024-04-25 16:17:08,842 [main] INFO  com.example.AppTestXL - Opened Money Control
+2024-04-25 16:18:26,967 [main] INFO  com.example.AppTestXL - Entered Reliance Industries
+2024-04-25 16:18:31,522 [main] INFO  com.example.AppTestXL - Selected Reliance Industries Ltd
+2024-04-25 16:18:33,580 [main] INFO  com.example.AppTestXL - Selected Mutual Funds
+2024-04-25 16:19:54,871 [main] INFO  com.example.AppTestXL - Opened Money Control
+2024-04-25 16:20:36,588 [main] INFO  com.example.AppTestXL - Entered Reliance Industries
+2024-04-25 16:20:38,739 [main] INFO  com.example.AppTestXL - Name Found
+2024-04-25 16:20:40,905 [main] INFO  com.example.AppTestXL - Selected Reliance Industries Ltd
+2024-04-25 16:20:42,976 [main] INFO  com.example.AppTestXL - Selected Mutual Funds
+2024-04-25 16:20:47,938 [main] INFO  com.example.AppTestXL - Selected SIP Return
+2024-04-25 16:21:10,998 [main] INFO  com.example.AppTestXL - Clicked Calculate Button

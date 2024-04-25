@@ -20,11 +20,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
  * Unit test for simple App.
  */
 public class AppTest {
-    // /**
-    // * Rigorous Test :-)
-    // *
-    // * @throws InterruptedException
-    // */
     WebDriver driver;
 
     @BeforeTest
@@ -53,20 +48,12 @@ public class AppTest {
        driver.findElement(By.xpath("/html/body/main/div[4]/nav/div[10]/a")).click();
    
         WebElement selectElement = driver.findElement(By.id("amcSelection"));
-
-        // Wrap the select element in a Select object
         Select select = new Select(selectElement);
-
-        // Select by visible text
         select.selectByVisibleText("Canara Robeco");
    
-        WebElement selectElement2 = driver.findElement(By.id("schemenm"));
-
-        // Wrap the select element in a Select object
-        Select select2 = new Select(selectElement2);
-
-        // Select by visible text
-        select2.selectByVisibleText("Canara Robeco Bluechip Equity Direct-G");
+    WebElement selectElement2 = driver.findElement(By.id("schemenm"));
+    Select select2 = new Select(selectElement2);
+    select2.selectByVisibleText("Canara Robeco Bluechip Equity Direct-G");
       
        driver.findElement(By.xpath("//*[@id=\"getDetails\"]")).click();
 

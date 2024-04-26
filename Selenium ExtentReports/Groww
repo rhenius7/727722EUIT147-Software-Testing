@@ -1,0 +1,111 @@
+package com.example;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.Markup;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class ExtentReportTest {
+    WebDriver driver;
+    ExtentReports reports;
+    ExtentTest test;
+
+    @BeforeTest
+    public void setup() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        ExtentSparkReporter ereport = new ExtentSparkReporter(
+                "C:\\Users\\ASUS\\OneDrive\\Desktop\\demo\\ExtentReports\\report.html");
+        reports = new ExtentReports();
+        reports.attachReporter(ereport);
+    }
+
+    @Test
+    public void Test() throws InterruptedException, IOException {
+
+        test = reports.createTest("Test Started");
+        driver.manage().window().maximize();
+        driver.get("https://groww.in/");
+        Thread.sleep(2000);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,3800)");
+        Thread.sleep(2000);
+        driver.findElement(By.linkText("Calculators")).click();
+        Thread.sleep(2000);
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        String screenshotPath = "C:\\Users\\ASUS\\OneDrive\\Desktop\\demo\\ExtentReports\\calculator_page.png";
+        FileUtils.copyFile(screenshot, new File(screenshotPath));
+
+        WebElement calc = driver.findElement(By.xpath("//*[@id='root']/div[2]/h1"));
+        String check = calc.getText();
+        if (check.equals("Calculators")) {
+            test.log(Status.PASS, "Calculator Present");
+            test.log(Status.PASS, "Test Passed",
+                    MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        else
+            test.log(Status.FAIL, "Calculator not Present");
+
+        js.executeScript("window.scrollBy(0,1000)");
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id='root']/div[2]/div[2]/a[15]/div/p[1]")).click();
+        Thread.sleep(2000);
+        FileInputStream fs = new FileInputStream("C:\\Users\\OrangeHRM.xlsx");
+        XSSFWorkbook workbook = new XSSFWorkbook(fs);
+        XSSFSheet sheet1 = workbook.getSheet("LOGIN");
+        XSSFRow row = sheet1.getRow(3);
+        double loan = row.getCell(0).getNumericCellValue();
+        String am = Double.toString(loan);
+        WebElement amount = driver.findElement(By.id("LOAN_AMOUNT"));
+        amount.clear();
+        amount.sendKeys(am);
+        Thread.sleep(2000);
+        WebElement interest = driver.findElement(By.id("RATE_OF_INTEREST"));
+        interest.clear();
+        interest.sendKeys("8");
+        Thread.sleep(2000);
+        WebElement tenure = driver.findElement(By.id("LOAN_TENURE"));
+        tenure.clear();
+        tenure.sendKeys("25");
+        Thread.sleep(2000);
+        WebElement text = driver
+                .findElement(By.xpath("//*[@id='root']/div[2]/div[1]/div[2]/div[1]/div[1]/div[2]/div/p"));
+        String text1 = text.getText();
+        if (text1.equals("Your Amortization Details (Yearly/Monthly)"))
+            test.log(Status.PASS, "Final details Passed");
+
+        else
+            test.log(Status.FAIL, "Final details Failed");
+
+        driver.quit();
+    }
+
+    @AfterTest
+    public void finish() {
+        reports.flush();
+    }
+}
